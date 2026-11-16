@@ -1,0 +1,56 @@
+@font-face {
+  font-family: 'Press Start 2P';
+  src: url('/fonts/press-start-2p-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Space Mono';
+  src: url('/fonts/space-mono-400-normal.woff2') format('woff2');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: 'Space Mono';
+  src: url('/fonts/space-mono-700-normal.woff2') format('woff2');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  --c-bg: #101023;
+  --c-bg-deep: #0a0a14;
+  --c-fg: #f2efe4;
+  --c-muted: #8f8ca8;
+  --c-line: rgb(242 239 228 / 0.14);
+  --c-accent: #f8b800;
+  --c-power: #e2502e;
+  --c-sky: #3cbcfc;
+  --c-curtain: #0a0a14;
+
+  --f-display: 'Press Start 2P', monospace;
+  --f-body: 'Space Mono', ui-monospace, monospace;
+
+  --t-mega: clamp(2.5rem, 1rem + 9vw, 11rem);
+  --t-xl: clamp(1.6rem, 1rem + 3.4vw, 4.2rem);
+  --t-l: clamp(1.25rem, 1rem + 1.4vw, 2.4rem);
+  --t-m: clamp(1rem, 0.95rem + 0.5vw, 1.35rem);
+  --t-body: clamp(1rem, 0.95rem + 0.2vw, 1.125rem);
+  --t-s: 0.875rem;
+  --t-xs: 0.75rem;
+
+  --u: 8px;
+  --gutter: clamp(1rem, 0.6rem + 1.6vw, 2.5rem);
+  --cols: 12;
+
+  --radius: 0px;
+
+  --z-content: 1;
+  --z-header: 50;
+  --z-cursor: 80;
+  --z-curtain: 90;
+  --z-loader: 100;
+}
