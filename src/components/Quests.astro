@@ -1,0 +1,42 @@
+---
+import { quests } from '../data/site';
+import Cover from './Cover.astro';
+---
+<section class="section" id="quests" data-world="WORLD 1-3 · LEVEL SELECT" aria-labelledby="quests-title">
+  <p class="label">LEVEL SELECT</p>
+  <h2 class="section__title" id="quests-title" data-split="lines">Choose a <em>quest</em></h2>
+
+  <ul class="quests">
+    {quests.map((q, i) => (
+      <li>
+        <a
+          class="qrow"
+          href={`/quest/${q.slug}/`}
+          data-level={q.level}
+          data-level-title={q.title}
+          data-cursor="ENTER"
+          data-preview={q.cover}
+          data-reveal="fade"
+          data-delay={String(i * 0.06)}
+        >
+          <span class="qrow__level">{q.level}</span>
+          <span>
+            <span class="qrow__title">{q.title}</span>
+            <span class="mono-s">{q.tagline}</span>
+          </span>
+          <span class="qrow__meta">
+            <span class="mono-s qrow__role">{q.role}</span>
+            <span class="chips">{q.stack.map((s) => <i class="chip">{s}</i>)}</span>
+          </span>
+        </a>
+      </li>
+    ))}
+  </ul>
+</section>
+
+<div class="preview" aria-hidden="true">
+  <div class="preview__cover" data-seed="ration"><Cover seed="ration" /></div>
+  <div class="preview__cover" data-seed="reconned" hidden><Cover seed="reconned" /></div>
+  <div class="preview__cover" data-seed="fedora" hidden><Cover seed="fedora" /></div>
+  <div class="preview__cover" data-seed="v1" hidden><Cover seed="v1" /></div>
+</div>

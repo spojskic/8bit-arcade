@@ -1,0 +1,66 @@
+---
+import { site } from '../data/site';
+
+const shop = [
+  { id: 'gameboy', name: 'GAME BOY', desc: 'GAME BOY palette, the 4-shade green DMG screen', price: 50 },
+  { id: 'virtualboy', name: 'VIRTUAL BOY', desc: 'Virtual Boy palette, red on black', price: 50 },
+  { id: 'magnet', name: 'COIN MAGNET', desc: 'Coin magnet, floor coins drift toward your pointer, permanent', price: 100 },
+  { id: 'companion', name: 'WALKER', desc: 'Walker companion, a second hero joins the walk', price: 75 },
+  { id: 'crt', name: 'CRT FILTER', desc: 'CRT filter, turn the scanline overlay on or off', price: 25 },
+];
+---
+<section class="section section--airy" id="save" data-world="WORLD 1-5 · SAVE POINT" aria-labelledby="save-title">
+  <div class="save">
+    <p class="label">SAVE POINT</p>
+    <h2 class="section__title" id="save-title" data-split="lines">Save your <em>game</em></h2>
+    <p class="mono-s">Hiring, or want to build something together? Send a save file.</p>
+
+    <a class="btn" href={`mailto:${site.email}`} data-fill>
+      <span class="btn__fill" aria-hidden="true"></span>
+      SAVE YOUR GAME
+    </a>
+
+    <div class="rush-trigger">
+      <button class="btn btn--ghost" type="button" data-rush-open data-fill>
+        <span class="btn__fill" aria-hidden="true"></span>
+        BONUS STAGE
+      </button>
+      <p class="mono-s">BEST ×<span class="num" data-rush-best>--</span></p>
+    </div>
+
+    <ul class="pipes">
+      {site.socials.map((s) => (
+        <li>
+          <a class="pipe" href={s.href} target="_blank" rel="noopener noreferrer">
+            <svg viewBox="0 0 10 8" width="20" height="16" aria-hidden="true">
+              <rect x="2" y="0" width="6" height="2" fill="#8f8ca8"></rect>
+              <rect x="1" y="2" width="8" height="1" fill="#8f8ca8"></rect>
+              <rect x="0" y="3" width="10" height="5" fill="#3cbcfc"></rect>
+            </svg>
+            {s.label}
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p class="mono-s">{site.location}</p>
+
+    <div class="shop" data-shop>
+      <p class="label" id="shop">SHOP</p>
+      <ul class="shop__list">
+        {shop.map((item) => (
+          <li class="shop__row" data-shop-row data-item={item.id} data-price={item.price}>
+            <div class="shop__info">
+              <span class="shop__name" data-shop-name>{item.name}</span>
+              <span class="shop__desc">{item.desc}</span>
+            </div>
+            <span class="shop__price num" data-shop-price>×{item.price}</span>
+            <button class="btn shop__buy" type="button" data-shop-buy data-fill>
+              <span class="btn__fill" aria-hidden="true"></span>
+              <span data-shop-label>BUY ×{item.price}</span>
+            </button>
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>

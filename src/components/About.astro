@@ -1,0 +1,18 @@
+---
+import { about } from '../data/site';
+---
+<section class="section" id="about" data-world="WORLD 1-1 · THE STORY" aria-labelledby="about-title">
+  <p class="label">WORLD 1-1 · THE STORY SO FAR</p>
+  <h2 class="section__title" id="about-title" data-split="lines">{about.heading}</h2>
+
+  <div class="dialog about__dialog" data-typewriter>
+    <p class="dialog__who">SAFET SAYS:</p>
+    {about.paragraphs.map((t) => <p data-type-p>{t}</p>)}
+    <p class="dialog__caret-wrap" aria-hidden="true"><i class="dialog__caret"></i></p>
+    <dl class="about__facts">
+      {about.facts.map((f) => (
+        <div><dt>{f.label}</dt><dd>{f.value}</dd></div>
+      ))}
+    </dl>
+  </div>
+</section>

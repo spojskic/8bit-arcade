@@ -1,0 +1,44 @@
+---
+import { site } from '../data/site';
+
+const onHome = Astro.url.pathname === '/';
+const href = (id: string) => (onHome ? `#${id}` : `/#${id}`);
+const nav = [
+  { id: 'about', label: 'ABOUT' },
+  { id: 'quests', label: 'QUESTS' },
+  { id: 'log', label: 'LOG' },
+  { id: 'save', label: 'SAVE' },
+];
+---
+<div class="hud" aria-label="Site frame">
+  <div class="hud__tl">
+    <a class="hud__brand" href="/" data-level="WORLD 1-1" data-level-title={site.wordmark}>{site.wordmark}</a>
+    <div class="hud__bar">
+      <nav class="hud__nav" aria-label="Sections">
+        {nav.map((n) => (
+          <a class="roll" href={href(n.id)} data-roll={n.label} aria-label={n.label}><span>{n.label}</span></a>
+        ))}
+      </nav>
+      <button class="sound-btn" type="button" aria-pressed="false" data-sound>SOUND OFF</button>
+      <a class="hud__bl hud__bl--bar" href={onHome ? '#shop' : '/#shop'} data-cursor="SHOP">
+        ×<span class="num coin-count">000</span><span class="sr-only">, open the shop</span>
+      </a>
+      <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu" data-menu-open>MENU</button>
+    </div>
+  </div>
+  <a class="hud__bl hud__bl--dock" href={onHome ? '#shop' : '/#shop'} data-cursor="SHOP">
+    COINS ×<span class="num coin-count">000</span><span class="sr-only">, open the shop</span>
+  </a>
+  <div class="hud__br">
+    <span class="hud__world" data-world-label>WORLD 1-1</span>
+    <span class="hud__clock">© 2026 · ZENICA <time data-clock>--:--</time></span>
+  </div>
+</div>
+<div class="menu" id="menu" hidden>
+  <button class="menu__close" type="button" data-menu-close>CLOSE ×</button>
+  <nav aria-label="Menu">
+    {nav.map((n) => <a href={href(n.id)} data-menu-link>{n.label}</a>)}
+    {onHome ? '' : <a href="/" data-menu-link>WORLD MAP</a>}
+  </nav>
+  <button class="menu__sound" type="button" data-sound aria-pressed="false">SOUND OFF</button>
+</div>

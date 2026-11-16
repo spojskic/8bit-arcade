@@ -1,0 +1,15 @@
+---
+import { site } from '../data/site';
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <p class="footer__name" aria-hidden="true">SAFET</p>
+  <div class="footer__grid">
+    <span>© {year} {site.name}</span>
+    <nav class="footer__links" aria-label="Contact and socials">
+      <a href={`mailto:${site.email}`}>EMAIL</a>
+      {site.socials.map((s) => <a href={s.href} target="_blank" rel="noopener noreferrer">{s.label.toUpperCase()}</a>)}
+    </nav>
+    <span>BUILT WITH ASTRO + GSAP · TYPE: PRESS START 2P / SPACE MONO</span>
+  </div>
+</footer>

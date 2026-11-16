@@ -1,0 +1,25 @@
+---
+import { skills } from '../data/site';
+---
+<section class="section" id="skills" data-world="WORLD 1-2 · INVENTORY" aria-labelledby="skills-title">
+  <p class="label">INVENTORY</p>
+  <h2 class="section__title" id="skills-title" data-split="lines">Equipped <em>skills</em></h2>
+
+  <div class="inv">
+    {skills.map((g, gi) => (
+      <div class="inv__group" data-reveal="up" data-delay={String(gi * 0.08)}>
+        <p class="label">{g.group.toUpperCase()}</p>
+        <ul class="inv__slots">
+          {g.items.map((item) => (
+            <li class="slot">
+              {g.icon === 'blade' && <svg viewBox="0 0 8 8" width="16" height="16" aria-hidden="true"><rect x="6" y="0" width="2" height="2" fill="#f2efe4"/><rect x="5" y="1" width="2" height="2" fill="#f2efe4"/><rect x="4" y="2" width="2" height="2" fill="#f2efe4"/><rect x="3" y="3" width="2" height="2" fill="#f2efe4"/><rect x="2" y="4" width="2" height="2" fill="#f2efe4"/><rect x="1" y="5" width="4" height="2" fill="#f8b800"/><rect x="0" y="7" width="3" height="1" fill="#f2efe4"/></svg>}
+              {g.icon === 'shield' && <svg viewBox="0 0 8 8" width="16" height="16" aria-hidden="true"><rect x="1" y="0" width="6" height="1" fill="#3cbcfc"/><rect x="0" y="1" width="8" height="3" fill="#3cbcfc"/><rect x="1" y="4" width="6" height="1" fill="#3cbcfc"/><rect x="2" y="5" width="4" height="1" fill="#3cbcfc"/><rect x="3" y="6" width="2" height="1" fill="#3cbcfc"/><rect x="3" y="1" width="2" height="2" fill="#f2efe4"/></svg>}
+              {g.icon === 'potion' && <svg viewBox="0 0 8 8" width="16" height="16" aria-hidden="true"><rect x="3" y="0" width="2" height="1" fill="#f2efe4"/><rect x="3" y="1" width="2" height="1" fill="#8f8ca8"/><rect x="2" y="2" width="4" height="1" fill="#f2efe4"/><rect x="1" y="3" width="6" height="4" fill="#e2502e"/><rect x="2" y="7" width="4" height="1" fill="#f2efe4"/></svg>}
+              <span>{item}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+    ))}
+  </div>
+</section>

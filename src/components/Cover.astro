@@ -1,0 +1,59 @@
+---
+interface Props { seed: 'ration' | 'reconned' | 'fedora' | 'v1'; }
+const { seed } = Astro.props;
+const C = {
+  ration: { bg: '#171208', ground: '#241a0e', crate: '#b5773a', dark: '#0f0a06', accent: '#f8b800', sky: '#0f0a06' },
+  reconned: { bg: '#152218', ground: '#1d3324', tree: '#0e1a10', accent: '#f8b800', sky: '#101820' },
+  fedora: { bg: '#141b33', ground: '#1b2748', tree: '#0d1326', accent: '#3cbcfc', sky: '#0d1326' },
+  v1: { bg: '#191226', ground: '#241a38', tree: '#0f0a1a', accent: '#f8b800', sky: '#0f0a1a' },
+}[seed];
+---
+<svg viewBox="0 0 32 20" class="pixel" role="img" aria-hidden="true">
+  <rect width="32" height="20" fill={C.sky}></rect>
+  <rect y="14" width="32" height="6" fill={C.ground}></rect>
+  {seed === 'ration' && (
+    <g>
+      <rect x="8" y="6" width="14" height="9" fill={C.crate}></rect>
+      <rect x="8" y="6" width="14" height="1" fill="#e0a568"></rect>
+      <rect x="8" y="14" width="14" height="1" fill="#7a4c22"></rect>
+      <rect x="13" y="8" width="3" height="1" fill="#e2502e"></rect>
+      <rect x="12" y="9" width="5" height="1" fill="#e2502e"></rect>
+      <rect x="13" y="10" width="3" height="1" fill="#e2502e"></rect>
+      <rect x="24" y="12" width="2" height="4" fill={C.accent}></rect>
+      <rect x="27" y="10" width="2" height="6" fill={C.accent}></rect>
+      <rect x="30" y="8" width="1" height="8" fill={C.accent}></rect>
+      <rect x="3" y="4" width="1" height="10" fill="#7a4c22"></rect>
+    </g>
+  )}
+  {seed === 'reconned' && (
+    <g>
+      <rect x="3" y="7" width="3" height="7" fill={C.tree}></rect><rect x="2" y="5" width="5" height="2" fill={C.tree}></rect>
+      <rect x="25" y="4" width="3" height="10" fill={C.tree}></rect><rect x="24" y="2" width="5" height="2" fill={C.tree}></rect>
+      <rect x="14" y="3" width="1" height="11" fill="#8f8ca8"></rect>
+      <rect x="15" y="3" width="5" height="3" fill={C.accent}></rect>
+      <rect x="8" y="15" width="3" height="3" fill="#e2502e"></rect><rect x="12" y="15" width="3" height="3" fill="#e2502e"></rect>
+    </g>
+  )}
+  {seed === 'fedora' && (
+    <g>
+      <rect x="6" y="3" width="20" height="14" fill={C.tree}></rect>
+      <rect x="7" y="5" width="18" height="11" fill={C.bg}></rect>
+      <rect x="7" y="3" width="18" height="1" fill={C.accent}></rect>
+      <rect x="9" y="7" width="3" height="3" fill={C.accent}></rect>
+      <rect x="14" y="7" width="3" height="3" fill="#f2efe4"></rect>
+      <rect x="19" y="7" width="3" height="3" fill="#e2502e"></rect>
+      <rect x="9" y="12" width="13" height="2" fill={C.ground}></rect>
+    </g>
+  )}
+  {seed === 'v1' && (
+    <g>
+      <rect x="4" y="2" width="24" height="13" fill={C.tree}></rect>
+      <rect x="6" y="4" width="20" height="9" fill={C.bg}></rect>
+      <rect x="8" y="6" width="8" height="5" fill={C.ground}></rect>
+      <rect x="18" y="6" width="6" height="1" fill={C.accent}></rect>
+      <rect x="18" y="8" width="4" height="1" fill="#f2efe4"></rect>
+      <rect x="14" y="15" width="4" height="2" fill={C.tree}></rect>
+      <rect x="10" y="17" width="12" height="1" fill={C.tree}></rect>
+    </g>
+  )}
+</svg>

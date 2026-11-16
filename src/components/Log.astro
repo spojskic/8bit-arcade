@@ -1,0 +1,55 @@
+---
+import { log, training } from '../data/site';
+
+const statusLabel: Record<string, string> = {
+  active: 'ACTIVE QUEST',
+  done: 'QUEST CLEARED',
+  side: 'SIDE QUEST',
+};
+---
+<section class="section" id="log" data-world="WORLD 1-4 · QUEST LOG" aria-labelledby="log-title">
+  <p class="label">QUEST LOG</p>
+  <h2 class="section__title" id="log-title" data-split="lines">XP <em>timeline</em></h2>
+
+  <div class="log">
+    {log.map((q) => (
+      <article class={`quest quest--${q.status}`} data-reveal="up">
+        <i class="quest__marker" aria-hidden="true"></i>
+        <div>
+          <div class="quest__head">
+            <h3 class="quest__company">{q.company}</h3>
+            <span class="quest__role">{q.role}</span>
+            <span class="quest__status">{statusLabel[q.status]}</span>
+            <span class="quest__period num">{q.period}</span>
+          </div>
+          <ul>
+            {q.bullets.map((b) => <li>{b}</li>)}
+          </ul>
+          {q.sub && (
+            <div class="quest__sub">
+              <p class="quest__sub-title">SUB-QUEST · {q.sub.period}</p>
+              <p class="mono-s">{q.sub.role}</p>
+              <ul>
+                {q.sub.bullets.map((b) => <li>{b}</li>)}
+              </ul>
+            </div>
+          )}
+          <div class="quest__xp" aria-hidden="true"><i></i></div>
+        </div>
+      </article>
+    ))}
+  </div>
+
+  <div class="section--tight" style="padding-block: 0; margin-top: calc(var(--u) * 6);">
+    <p class="label">TRAINING ARC</p>
+    <ul class="training" style="margin-top: var(--u);">
+      {training.map((t) => (
+        <li>
+          <span class="mono-s">{t.field}</span>
+          <span>{t.school}</span>
+          <span class="period mono-s num">{t.period}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+</section>
