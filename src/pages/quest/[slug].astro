@@ -1,0 +1,60 @@
+---
+import Base from '../../layouts/Base.astro';
+import Cover from '../../components/Cover.astro';
+import Footer from '../../components/Footer.astro';
+import { quests, byslug, site } from '../../data/site';
+
+export function getStaticPaths() {
+  return quests.map((q) => ({ params: { slug: q.slug } }));
+}
+
+const quest = byslug(Astro.params.slug!)!;
+const next = byslug(quest.next)!;
+---
+<Base title={`${quest.level}: ${quest.title}`} description={quest.summary} level={quest.level} levelTitle={quest.title}>
+  <article class="case" data-world={`${quest.level} · SIDE QUEST`}>
+    <header class="case__hero">
+      <p class="label">{quest.level}</p>
+      <h1 class="case__title" data-split="lines">{quest.title}</h1>
+      <p class="case__summary" data-split="lines">{quest.summary}</p>
+      <div class="dialog case__cover" aria-hidden="true">
+        <Cover seed={quest.cover} />
+      </div>
+      <dl class="case__meta">
+        <div><dt>ROLE</dt><dd>{quest.role}</dd></div>
+        <div><dt>STACK</dt><dd>{quest.stack.join(', ')}</dd></div>
+        <div><dt>STATUS</dt><dd>{quest.status}</dd></div>
+      </dl>
+    </header>
+
+    <div class="case__body">
+      {quest.body.map((b, i) => (
+        <section class={`dialog case__block case__block--${b.heading.toLowerCase()}`} data-reveal="up" data-delay={String(i * 0.05)}>
+          <h2>{b.heading.toUpperCase()}</h2>
+          <p>{b.text}</p>
+        </section>
+      ))}
+    </div>
+
+    <div class="case__visit">
+      <a class="btn" href={quest.url} target="_blank" rel="noopener noreferrer" aria-label={`VISIT SITE, ${quest.urlLabel}`} data-fill>
+        <span class="btn__fill" aria-hidden="true"></span>
+        VISIT SITE
+      </a>
+    </div>
+
+    <div class="case__next">
+      <a class="qrow" href={`/quest/${next.slug}/`} aria-label={`Next quest: ${next.level} ${next.title} ${next.tagline} NEXT QUEST`} data-level={next.level} data-level-title={next.title} data-cursor="ENTER">
+        <span class="qrow__level">{next.level}</span>{' '}
+        <span>
+          <span class="qrow__title">{next.title}</span>
+        </span>{' '}
+        <span class="qrow__meta">
+          <span class="mono-s">{next.tagline}</span>{' '}
+          <span class="case__next-label">NEXT QUEST</span>
+        </span>
+      </a>
+    </div>
+  </article>
+  <Footer />
+</Base>

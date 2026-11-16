@@ -1,0 +1,50 @@
+---
+import Base from '../layouts/Base.astro';
+import { site } from '../data/site';
+---
+<Base title="Game Over" description="Page not found. Continue back to the world map.">
+  <section class="over" aria-labelledby="over-title">
+    <p class="label">ERROR 404</p>
+    <h1 class="over__title" id="over-title">GAME OVER</h1>
+    <div class="boss" data-boss>
+      <div class="boss__hp" data-boss-hp aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i>
+      </div>
+      <svg
+        class="boss__sprite pixel"
+        data-boss-sprite
+        viewBox="0 0 24 16"
+        width="96"
+        height="64"
+        aria-hidden="true"
+        focusable="false"
+        shape-rendering="crispEdges"
+      >
+        <rect x="6" y="2" width="12" height="2" fill="#2a2a48" />
+        <rect x="4" y="4" width="16" height="8" fill="#2a2a48" />
+        <rect x="6" y="12" width="12" height="2" fill="#2a2a48" />
+        <rect x="2" y="6" width="2" height="2" fill="#2a2a48" />
+        <rect x="20" y="6" width="2" height="2" fill="#2a2a48" />
+        <rect x="6" y="14" width="4" height="2" fill="#2a2a48" />
+        <rect x="14" y="14" width="4" height="2" fill="#2a2a48" />
+        <rect x="8" y="6" width="3" height="3" fill="#e2502e" />
+        <rect x="14" y="6" width="3" height="3" fill="#e2502e" />
+        <rect x="10" y="11" width="4" height="1" fill="#0a0a14" />
+        <rect x="0" y="4" width="2" height="1" fill="#f2efe4" />
+        <rect x="21" y="9" width="3" height="1" fill="#f2efe4" />
+        <rect x="11" y="0" width="2" height="2" fill="#f2efe4" />
+        <rect x="17" y="13" width="3" height="1" fill="#f2efe4" />
+        <rect x="3" y="10" width="1" height="1" fill="#e2502e" />
+      </svg>
+    </div>
+    <div class="over__score" role="presentation">
+      <span><b>PAGE NOT FOUND</b> × 1</span>
+      <span class="num" data-boss-line hidden>MONSTER × 0</span>
+      <span class="num">SCORE ×0 &nbsp; COINS ×<span id="over-coins">000</span></span>
+    </div>
+    <a class="btn" href="/" data-level="WORLD 1-1" data-level-title={site.wordmark} data-fill>
+      <span class="btn__fill" aria-hidden="true"></span>
+      CONTINUE?
+    </a>
+  </section>
+</Base>
