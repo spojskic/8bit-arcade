@@ -1,0 +1,65 @@
+---
+import { stageFor } from '../lib/pixelfont';
+import { site } from '../data/site';
+
+const { cols, rows, pixels } = stageFor('SAFET');
+
+let seed = 42;
+const rnd = () => ((seed = (seed * 1103515245 + 12345) % 2147483648) / 2147483648);
+const stars = Array.from({ length: 26 }, (_, i) => ({
+  left: `${(rnd() * 96 + 2).toFixed(1)}%`,
+  top: `${(rnd() * 46 + 4).toFixed(1)}%`,
+  delay: `${(i * 0.13).toFixed(2)}s`,
+}));
+const clouds = [
+  { top: '18%', width: '120px', dur: '46s', depth: 'near' },
+  { top: '10%', width: '84px', dur: '60s', depth: 'near' },
+  { top: '34%', width: '150px', dur: '74s', depth: 'far' },
+  { top: '28%', width: '96px', dur: '88s', depth: 'far' },
+];
+---
+<section class="hero" data-hero aria-label="Title screen">
+  <div class="hero__sky" aria-hidden="true">
+    <div class="hero__far" data-sky-far>
+      {stars.map((s) => <i class="star" style={`left:${s.left};top:${s.top};animation-delay:${s.delay}`}></i>)}
+      {clouds.filter((c) => c.depth === 'far').map((c) => (
+        <svg class="cloud pixel" viewBox="0 0 26 9" style={`left:0;top:${c.top};width:${c.width}`} fill="#1e1e3a">
+          <rect x="5" y="0" width="10" height="3" /><rect x="3" y="3" width="18" height="3" /><rect x="0" y="6" width="26" height="3" /><rect x="19" y="3" width="5" height="3" />
+        </svg>
+      ))}
+    </div>
+    <div class="hero__near" data-sky-near>
+      {clouds.filter((c) => c.depth === 'near').map((c) => (
+        <svg class="cloud pixel" viewBox="0 0 26 9" style={`left:0;top:${c.top};width:${c.width}`} fill="#232344">
+          <rect x="5" y="0" width="10" height="3" /><rect x="3" y="3" width="18" height="3" /><rect x="0" y="6" width="26" height="3" /><rect x="19" y="3" width="5" height="3" />
+        </svg>
+      ))}
+    </div>
+  </div>
+
+  <h1 class="sr-only">{site.name}, {site.role}. {site.heroLine}</h1>
+  <div class="hero__inner">
+    <div class="stage" data-stage aria-hidden="true">
+      {pixels.map((p) => (
+        <i
+          class={`block${p.gold ? ' block--gold' : ''}`}
+          style={`left:${(p.col / cols) * 100}%;top:${(p.row / rows) * 100}%;width:${100 / cols}%;height:${100 / rows}%`}
+          data-col={p.col}
+          data-row={p.row}
+          data-idx={p.index}
+        ></i>
+      ))}
+    </div>
+    <p class="hero__sub">
+      <strong>{site.role.toUpperCase()}</strong><br />
+      WORKS ACROSS THE STACK, CARES MOST ABOUT THE FRONT END
+    </p>
+    <button class="hero__cta" type="button" data-press-start data-fill>
+      <span class="hero__cta-fill" aria-hidden="true"></span>
+      <span class="hero__cta-label">PRESS START</span>
+    </button>
+  </div>
+
+  {Array.from({ length: 18 }, () => <i class="coin" aria-hidden="true"></i>)}
+  <div class="hero__floor" aria-hidden="true"></div>
+</section>
