@@ -207,6 +207,7 @@ export function startHero() {
       if (!c.active) return;
       anchor(c);
       c.settled = true;
+      gsap.set(c.el, { pointerEvents: 'auto', touchAction: 'none' });
       c.ttl?.kill();
       c.ttl = gsap.delayedCall(COIN_TTL, () => {
         c.ttl = null;
@@ -308,12 +309,20 @@ export function startHero() {
     };
 
     const grab = (c: CoinState, e: PointerEvent) => {
-      if (!c.toy || c.drag) return;
+      if (!c.active || c.drag) return;
       if (e.pointerType === 'mouse' && e.button !== 0) return;
       c.fly?.kill();
       c.fly = null;
       c.rest?.kill();
       c.rest = null;
+      if (!c.toy) {
+        c.toy = true;
+        c.ttl?.kill();
+        c.ttl = null;
+        c.toyCall?.kill();
+        c.toyCall = null;
+        c.el.classList.add('coin--toy');
+      }
       anchor(c);
       const r = c.el.getBoundingClientRect();
       c.drag = true;
@@ -605,14 +614,13 @@ export function startHero() {
     const tick = () => {
       if (carved > 0 && performance.now() - lastMove > REASSEMBLE_MS) reassemble();
       if (!attractDone && running && performance.now() - lastMove > ATTRACT_MS) attract();
-      if (isTouch()) return;
       const pull = magnet ? (MAGNET_V * gsap.ticker.deltaRatio()) / 60 : 0;
       for (const c of coins) {
-        if (!c.active || c.toy || c.drag) continue;
+        if (!c.active || c.drag) continue;
         const dx = px - (c.x + 6);
         const dy = py - (c.y + 6);
         const d2 = dx * dx + dy * dy;
-        if (d2 < COLLECT_R * COLLECT_R) {
+        if (!c.toy && !isTouch() && d2 < COLLECT_R * COLLECT_R) {
           collect(c);
           continue;
         }
@@ -628,15 +636,50 @@ export function startHero() {
       const el = (e.target as HTMLElement).closest<HTMLElement>('.coin');
       return el ? coins.find((c) => c.el === el) : undefined;
     };
+    const tapCollect = (c: CoinState) => {
+      release(c);
+      addCoins(1);
+      coinSfx();
+      gsap.to(c.el, { y: '-=20', scale: 0.4, autoAlpha: 0, duration: 0.24, ease: 'steps(2)' });
+    };
+
+    let tapCandidate: { c: CoinState; x: number; y: number; hold: gsap.core.Tween } | null = null;
+
+    const endTapCandidate = () => {
+      if (!tapCandidate) return;
+      tapCandidate.hold?.kill();
+      tapCandidate = null;
+    };
+
     const coinDown = (e: PointerEvent) => {
       const c = coinAt(e);
-      if (c) grab(c, e);
+      if (!c || !c.active || c.drag) return;
+      endTapCandidate();
+      const hold = gsap.delayedCall(0.22, () => {
+        if (tapCandidate?.c === c) {
+          endTapCandidate();
+          grab(c, e);
+        }
+      });
+      tapCandidate = { c, x: e.clientX, y: e.clientY, hold };
     };
     const coinMove = (e: PointerEvent) => {
+      if (tapCandidate && Math.hypot(e.clientX - tapCandidate.x, e.clientY - tapCandidate.y) > 8) {
+        const c = tapCandidate.c;
+        endTapCandidate();
+        grab(c, e);
+        return;
+      }
       const c = coinAt(e);
       if (c) drag(c, e);
     };
     const coinUp = (e: PointerEvent) => {
+      if (tapCandidate?.c.active && !tapCandidate.c.drag) {
+        tapCollect(tapCandidate.c);
+        endTapCandidate();
+        return;
+      }
+      endTapCandidate();
       const c = coinAt(e);
       if (c) drop(c, e);
     };
@@ -648,6 +691,13 @@ export function startHero() {
     hero.addEventListener('pointermove', move, { passive: true });
     hero.addEventListener('pointerdown', hidden, { passive: true });
     if (isTouch()) hero.addEventListener('pointerdown', down, { passive: true });
+    const mark = (e: PointerEvent) => {
+      const hr = hero.getBoundingClientRect();
+      px = e.clientX - hr.left;
+      py = e.clientY - hr.top;
+      lastMove = performance.now();
+    };
+    hero.addEventListener('pointerdown', mark);
     hero.addEventListener('pointerdown', coinDown);
     hero.addEventListener('pointermove', coinMove);
     hero.addEventListener('pointerup', coinUp);
@@ -666,7 +716,9 @@ export function startHero() {
 
     return () => {
       cleanupCta();
+      endTapCandidate();
       hero.removeEventListener('pointermove', move);
+      hero.removeEventListener('pointerdown', mark);
       hero.removeEventListener('pointerdown', hidden);
       hero.removeEventListener('pointerdown', down);
       hero.removeEventListener('pointerdown', coinDown);
