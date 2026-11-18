@@ -540,7 +540,7 @@ html.motion .quest--active .quest__marker { animation: blink 1s steps(2) infinit
   .hud__bar { gap: 16px; }
   .hud__bar .hud__nav, .hud__bar .sound-btn { display: none; }
   .menu-btn { display: block; }
-  .hero { min-height: 78svh; padding-top: 84px; padding-bottom: 64px; }
+  .hero { min-height: 100svh; padding-top: 84px; padding-bottom: 72px; }
   .stage { width: 100%; }
   .hero__cta { font-size: var(--t-xs); }
   .qrow { grid-template-columns: 1fr; gap: 8px; }
@@ -567,6 +567,12 @@ html.motion .quest--active .quest__marker { animation: blink 1s steps(2) infinit
   .shop__buy { grid-column: 2; justify-self: end; }
   .footer__name { font-size: clamp(2rem, 12vw, 4rem); }
   .section { padding-block: calc(var(--u) * 8); }
+}
+
+@media (max-width: 480px) {
+  .hud__bar { gap: 8px; }
+  .hud__brand, .hud__bl--bar, .menu-btn { font-size: 11px; }
+  .hud__bl--bar { gap: 6px; }
 }
 
 @media (max-width: 640px) {
