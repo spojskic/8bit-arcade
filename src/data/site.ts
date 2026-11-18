@@ -22,7 +22,7 @@ export const site = {
   currentRole: 'Software Engineer @ HTEC Group',
   location: 'Zenica, Bosnia and Herzegovina',
   email: 'pm@safetpojskic.com',
-  url: 'https://safetpojskic.com',
+  url: 'https://8bit.safetpojskic.com',
   description:
     'Safet Pojskić is a software engineer in Zenica, BiH. Frontend-leaning full-stack developer, currently at HTEC Group, previously tech lead at Pickleball.com.',
   socials: [
