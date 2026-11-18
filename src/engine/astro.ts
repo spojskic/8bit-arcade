@@ -12,7 +12,7 @@ function ownHashLinks() {
       const id = a.getAttribute('href')!;
       if (id.length < 2 || !document.getElementById(id.slice(1))) return;
       e.preventDefault();
-      e.stopImmediatePropagation();
+      if (!a.closest('#menu')) e.stopImmediatePropagation();
       scrollToTarget(id);
       history.replaceState(history.state, '', id);
     },

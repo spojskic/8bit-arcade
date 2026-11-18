@@ -54,6 +54,9 @@ export function setupMotion() {
       const a = (e.target as HTMLElement).closest<HTMLElement>('a[data-level]');
       if (!a) return;
       nextLevel = { level: a.dataset.level || '', title: a.dataset.levelTitle || '' };
+      if (a.getAttribute('href')?.startsWith('/quest/')) {
+        sessionStorage.setItem('sq-last-quest', a.getAttribute('href')!);
+      }
     },
     true,
   );
@@ -100,6 +103,14 @@ export function setupMotion() {
   });
 
   onPage(() => {
+    const last = sessionStorage.getItem('sq-last-quest');
+    if (last) {
+      const row = document.querySelector<HTMLElement>(`.qrow[href="${last}"]`);
+      if (row) {
+        row.classList.add('qrow--visited');
+        row.setAttribute('aria-current', 'page');
+      }
+    }
     document.querySelectorAll<HTMLElement>('[data-fill]').forEach((btn) => {
       const fill = btn.querySelector<HTMLElement>('.btn__fill, .hero__cta-fill');
       if (!fill) return;
@@ -164,7 +175,11 @@ export function setupMotion() {
       });
     });
     menu.addEventListener('click', (e) => {
-      if (e.target === menu || (e.target as HTMLElement).matches('[data-menu-close]')) setOpen(false);
+      if (e.target === menu || (e.target as HTMLElement).matches('[data-menu-close]')) {
+        setOpen(false);
+        return;
+      }
+      if ((e.target as HTMLElement).closest('#menu a')) setOpen(false);
     });
     menu.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {

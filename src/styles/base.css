@@ -318,6 +318,9 @@ html.motion .dialog__caret { animation: blink 0.9s steps(2) infinite; }
 .qrow:hover .mono-s, .qrow:focus-visible .mono-s { color: var(--c-bg-deep); }
 .qrow:hover .chip, .qrow:focus-visible .chip { color: var(--c-bg-deep); border-color: var(--c-bg-deep); background: transparent; }
 .qrow::before, .qrow:hover::before { transition: transform 0.3s steps(5); }
+.qrow--visited::after { opacity: 1; translate: 0 0; }
+.qrow--visited .qrow__level { color: var(--c-fg); }
+.qrow--visited .qrow__level::after { content: ' · CLEARED'; color: var(--c-accent); }
 .qrow__level { font-family: var(--f-display); font-size: var(--t-xs); color: var(--c-accent); padding-top: 6px; }
 .qrow__title { font-family: var(--f-display); font-size: var(--t-l); line-height: 1.3; }
 .qrow__meta { display: grid; gap: 8px; justify-items: end; text-align: right; }
